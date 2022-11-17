@@ -154,11 +154,32 @@ void triggerAction(){ //トリガーモードでの動作
 }
 
 void cycleAction(){ // サイクルモードでの動作
-   String sm = dataMap->get("sensorMode");
-   int datax = random(1,100);
-   bool r = sendInt( 1, datax );
-   Serial.print("cycle送信しました。結果->");
-   Serial.println(r);
+  String test = "", datax = "";
+  test = dataMap->get("d1type");
+  datax = dataMap->get("d1");
+
+  if(test == "int"){
+      ambient.set( 1, (int)datax.toInt() );
+  }else if(test == "double"){
+      ambient.set( 1, (double)datax.toDouble() );
+  }else if(test == "none"){
+  }
+
+  test = dataMap->get("d2type");
+  datax = dataMap->get("d2");
+
+  if(test == "int"){
+      ambient.set( 2, (int)datax.toInt );
+  }else if(test == "double"){
+      ambient.set( 2, (double)datax.toDouble() );
+  }else if(test == "none"){
+  }
+
+
+  bool r = ambient.send();
+
+  Serial.print("cycle送信しました。結果->");
+  Serial.println( r );
 }
 
 void buttonFunc(){
@@ -373,18 +394,26 @@ void setDefaultdata(){
   dataMap->put("ambientChannelid", "57786");
   dataMap->put("iotMode", "cycle"); 
   // IoTモード null モードなし、cycle 周期実行モード、trigger トリガー実行モード
-  dataMap->put("sensorMode", "bps_unit"); 
+  dataMap->put("sensorMode", "button"); 
   // センサーモード SensorMode(iotModer)->button(trigger):ボタン、bps_unit(cycle)
   //ambientのデータ フィールド番号（１～８）, データ内容（int または double )
-  dataMap->put("cycleTime", "60000"); //サイクルモードのサイクル実行間隔を設定する。
-  dataMap->put("1", "0000");
-  dataMap->put("2", "0000");
-  dataMap->put("3", "0000");
-  dataMap->put("4", "0000");
-  dataMap->put("5", "0000");
-  dataMap->put("6", "0000");
-  dataMap->put("7", "0000");
-  dataMap->put("8", "0000");
+  dataMap->put("cycleTime", "300000"); //サイクルモードのサイクル実行間隔を設定する。
+  dataMap->put("d1type", "int"); //送信用データタイプ、int,double,char,none. noneはデータ無し。 
+  dataMap->put("d2type", "double");
+  dataMap->put("d3type", "none");
+  dataMap->put("d4type", "none");
+  dataMap->put("d5type", "none");
+  dataMap->put("d6type", "none");
+  dataMap->put("d7type", "none");
+  dataMap->put("d8type", "none");
+  dataMap->put("d1", "10"); //送信用データ Stringに変換して格納 
+  dataMap->put("d2", "1.25");
+  dataMap->put("d3", "0");
+  dataMap->put("d4", "0");
+  dataMap->put("d5", "0");
+  dataMap->put("d6", "0");
+  dataMap->put("d7", "0");
+  dataMap->put("d8", "0");
   dataMap->put("cmnt", ""); //コメント用データ
  
   //Serial.println( toJSON( dataMap ) );
