@@ -1,23 +1,6 @@
-
-// ソフトウェア情報
-const String softwareName = "ChocoSensorOS";
-const String softwareVersion = "0.1";
-const String deviceName = "ATOM_Lite";
-const String developerName = "古川企画";
-
-//ハッシュ化用変数
-String hashSource = "nullpo";
-uint8_t mac1[6];
-String chipId = "nullpo";
 #include <SpritzCipher.h> 
 #include <Int64String.h>
 #define hex_char(n) ((n) < 10 ? '0' + (n) : 'A' + ((n)-10)) 
-byte hash[32]; // byte hash 
-char hash_string[65]; // hex string hash 
-String Hash = "nullpo";
-//String hashAns = "4D15798080434A821B880EF5C23464BD8FE76541E0316835172AEBC13AF48AC5";
-String hashAns = "4D15798080434A821B880EF5C23464BD8FE76541E0316835172AEBC13AF48AC5";
-bool Result = false;
 
 //M5 Atom
 #include "M5Atom.h"
@@ -40,12 +23,6 @@ const int smallBlue   = 0x000011 ;
 const int smallRed   = 0x110000 ;
 const int smallPurple  = 0x110011 ;
 const int smallYellow  = 0x111100 ;
-
-//円周率計算テスト
-//#define seedVolume 100000000
-#define seedVolume 1000000
-uint64_t inCirclePoints = 0;
-uint64_t Step = 0;
 
 //モード設定
 long M = 0; //M数はコマンドモードを判別する数値。Mが1以上ならコマンドモード。実体としてはフリーループ数で、M数の分だけ作業をスキップする。
@@ -132,8 +109,6 @@ void loop() {
     }else{
       //IoTモード例外
     }
-
-
     
   }else if( M == 1 ){
     //作業モード復帰前処理
@@ -167,8 +142,8 @@ void triggerAction(){ //トリガーモードでの動作
 
 void cycleAction(){ // サイクルモードでの動作
    String sm = dataMap->get("sensorMode");
-   if( sm == "bps_unit" ){
-   }
+    sendInt( 1, random(0,101) );
+   Serial.println("cycle送信しました。");
 }
 
 void buttonFunc(){
@@ -521,62 +496,6 @@ void readCommand(){
        }
 }
 
-
-//円周率計算 https://qiita.com/Nch_MOSFET/items/9bb9b27ad17a2c828f01
-void Pi_Calculator(uint64_t turn){
-  
-  Serial.print("Start Calculating ");
-  Serial.print(turn);
-  Serial.println(" Times...");
-  for(uint64_t i = 0; i < turn; i++){
-    float pointX = random(-32767, 32767) / 32767.0;
-    float pointY = random(-32767, 32767) / 32767.0;
-
-    if((pow(pointX, 2) + pow(pointY, 2)) <= 1.0){    //20220113, 変更しました:
-      inCirclePoints++;
-    }
-    Step++;
-  }
-  float result = float(inCirclePoints * 4) / float(Step);
-  Serial.println("Calculate Finished.");
-  Serial.print("Result:");
-  Serial.println(result, 10);
-  
-}
-
-
-
-
-//情報取得関数
-String makeSource(){
-
-  String x = softwareVersion
-           + mac1[1]
-           + deviceName
-           + ESP.getCpuFreqMHz()
-           + mac1[3]
-           + esp_get_idf_version()
-           + mac1[4]
-           + ESP.getFlashChipSpeed()
-           + developerName
-           + mac1[2]
-           + mac1[5]
-           + softwareName
-           + chipId
-           + ESP.getChipRevision()
-           + mac1[0]
-           ;
-
-    return x;
-           
-}
-
-void getDeviceInfo(){
- 
- chipId = int64String( ESP.getEfuseMac(), HEX, false);
- esp_efuse_mac_get_default( mac1 );
- 
-}
 
 
 
