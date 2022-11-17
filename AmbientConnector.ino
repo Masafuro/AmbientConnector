@@ -142,8 +142,9 @@ void triggerAction(){ //トリガーモードでの動作
 
 void cycleAction(){ // サイクルモードでの動作
    String sm = dataMap->get("sensorMode");
-    sendInt( 1, random(0,101) );
-   Serial.println("cycle送信しました。");
+   bool r = sendInt( 1, 10 );
+   Serial.print("cycle送信しました。結果->");
+   Serial.println(r);
 }
 
 void buttonFunc(){
@@ -167,24 +168,18 @@ void variablePrint(String a, String b){
 
 
 bool sendInt( int f, int D ){ // f:フィールド１～８を指定。D:送信するデータ
-   
    ambient.set( f, D );
    return ambient.send();
-
 }
 
 bool sendChar( int f, char D ){ // f:フィールド１～８を指定。D:送信するデータ
-   
    ambient.set( f, D );
    return ambient.send();
-
 }
 
 bool sendDouble( int f, double D ){ // f:フィールド１～８を指定。D:送信するデータ
-   
    ambient.set( f, D );
    return ambient.send();
-
 }
 
 
@@ -359,9 +354,9 @@ void setDefaultdata(){
 //  dataMap->put("pass", "abcdefg");
   dataMap->put("deviceName", "ChocoSensor_v1");
   dataMap->put("devicePassword", "0000");
-  dataMap->put("ambientReadkey", "58c3f9698b899738");
-  dataMap->put("ambientWritekey", "c1644dbd6fbe52af");
-  dataMap->put("ambientChannelid", "31837");
+  dataMap->put("ambientReadkey", "34270954ea493bb5");
+  dataMap->put("ambientWritekey", "d75e7c19cb3aa8cc");
+  dataMap->put("ambientChannelid", "57786");
   dataMap->put("iotMode", "cycle"); 
   // IoTモード null モードなし、cycle 周期実行モード、trigger トリガー実行モード
   dataMap->put("sensorMode", "bps_unit"); 
