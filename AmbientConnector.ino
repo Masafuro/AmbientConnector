@@ -2,6 +2,12 @@
 #include <Int64String.h>
 #define hex_char(n) ((n) < 10 ? '0' + (n) : 'A' + ((n)-10)) 
 
+//送信データ用グローバル変数 d1~d8まで
+int d1=9;
+double d2=0.2;
+char d3='B';
+
+
 //M5 Atom
 #include "M5Atom.h"
 const bool SerialEnable = true;
@@ -64,7 +70,7 @@ int upCount = 0;
 void setup() {
   delay(1000);
   M5.begin( SerialEnable, I2CEnable, DisplayEnable);// ボーレートは115200のシリアル通信がセットされる。
-  delay(10000);
+  delay(1000);
   Serial.println("Start Ambient Connector.");
   M5.dis.drawpix(0, smallRed );
 
@@ -89,6 +95,9 @@ void setup() {
 
   
   C = dataMap->get( "cycleTime" ).toInt();
+  //初回起動時、送信実行
+  cycleAction();
+
   
 }
 
@@ -154,27 +163,10 @@ void triggerAction(){ //トリガーモードでの動作
 }
 
 void cycleAction(){ // サイクルモードでの動作
-  String test = "", datax = "";
-  test = dataMap->get("d1type");
-  datax = dataMap->get("d1");
-
-  if(test == "int"){
-      ambient.set( 1, (int)datax.toInt() );
-  }else if(test == "double"){
-      ambient.set( 1, (double)datax.toDouble() );
-  }else if(test == "none"){
-  }
-
-  test = dataMap->get("d2type");
-  datax = dataMap->get("d2");
-
-  if(test == "int"){
-      ambient.set( 2, (int)datax.toInt );
-  }else if(test == "double"){
-      ambient.set( 2, (double)datax.toDouble() );
-  }else if(test == "none"){
-  }
-
+  
+  ambient.set( 1, d1 );
+  ambient.set( 2, d2 );
+  ambient.set( 3, d3 );
 
   bool r = ambient.send();
 
@@ -398,22 +390,6 @@ void setDefaultdata(){
   // センサーモード SensorMode(iotModer)->button(trigger):ボタン、bps_unit(cycle)
   //ambientのデータ フィールド番号（１～８）, データ内容（int または double )
   dataMap->put("cycleTime", "300000"); //サイクルモードのサイクル実行間隔を設定する。
-  dataMap->put("d1type", "int"); //送信用データタイプ、int,double,char,none. noneはデータ無し。 
-  dataMap->put("d2type", "double");
-  dataMap->put("d3type", "none");
-  dataMap->put("d4type", "none");
-  dataMap->put("d5type", "none");
-  dataMap->put("d6type", "none");
-  dataMap->put("d7type", "none");
-  dataMap->put("d8type", "none");
-  dataMap->put("d1", "10"); //送信用データ Stringに変換して格納 
-  dataMap->put("d2", "1.25");
-  dataMap->put("d3", "0");
-  dataMap->put("d4", "0");
-  dataMap->put("d5", "0");
-  dataMap->put("d6", "0");
-  dataMap->put("d7", "0");
-  dataMap->put("d8", "0");
   dataMap->put("cmnt", ""); //コメント用データ
  
   //Serial.println( toJSON( dataMap ) );
