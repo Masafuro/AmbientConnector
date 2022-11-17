@@ -62,7 +62,7 @@ bool modeSetup = false;
 int upCount = 0;
 
 void setup() {
-  
+  delay(1000);
   M5.begin( SerialEnable, I2CEnable, DisplayEnable);// ボーレートは115200のシリアル通信がセットされる。
   delay(10000);
   Serial.println("Start Ambient Connector.");
@@ -74,7 +74,20 @@ void setup() {
   createReceivemap();
   setDefaultdata();
   bool W = connectWifi();
+  if ( W == true ){
+    Serial.println("Wifi Connect OK.");
+  }else{
+    Serial.println("Wifi Connect NG.");
+  }
+  
   bool A = connectAmbient();
+  if ( A == true ){
+    Serial.println("Ambient Connect OK.");
+  }else{
+    Serial.println("Ambient Connect NG.");
+  }
+
+  
   C = dataMap->get( "cycleTime" ).toInt();
   
 }
@@ -142,7 +155,8 @@ void triggerAction(){ //トリガーモードでの動作
 
 void cycleAction(){ // サイクルモードでの動作
    String sm = dataMap->get("sensorMode");
-   bool r = sendInt( 1, 10 );
+   int datax = random(1,100);
+   bool r = sendInt( 1, datax );
    Serial.print("cycle送信しました。結果->");
    Serial.println(r);
 }
