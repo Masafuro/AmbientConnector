@@ -2,12 +2,6 @@
 #include <Int64String.h>
 #define hex_char(n) ((n) < 10 ? '0' + (n) : 'A' + ((n)-10)) 
 
-//送信データ用グローバル変数 d1~d8まで
-int d1=9;
-double d2=0.2;
-char d3='B';
-
-
 //M5 Atom
 #include "M5Atom.h"
 const bool SerialEnable = true;
@@ -67,6 +61,41 @@ unsigned long interval = 30000;
 bool modeSetup = false;
 int upCount = 0;
 
+
+//----*送りたい変数を設定---- 送信データ用グローバル変数 d1~d8まで
+int d1=9;
+double d2=0.2;
+char d3='B';
+
+void cycleAction(){ // ----*サイクルモードでの動作-----
+  
+  ambient.set( 1, d1 );
+  ambient.set( 2, d2 );
+  ambient.set( 3, d3 );
+
+  bool r = ambient.send();
+
+  Serial.print("cycle送信しました。結果->");
+  Serial.println( r );
+}
+
+void triggerAction(){ //-----*トリガーモードでの動作-----
+
+  String sm = dataMap->get("sensorMode"); // 設定されたセンサーモードを取得
+
+  if( sm == "button" ){
+    buttonFunc();
+  }else if(sm == "none"){
+    
+  }else{ //センサーモード分岐の末尾
+    Serial.println("センサーモード設定がおかしいようです。");
+  }
+}
+
+
+
+
+
 void setup() {
   delay(1000);
   M5.begin( SerialEnable, I2CEnable, DisplayEnable);// ボーレートは115200のシリアル通信がセットされる。
@@ -107,6 +136,11 @@ void loop() {
 
   commandTrigger(); //コマンド入力時割り込み処理
   bool W = wifiCheck();
+  
+  if( millis() > 604800000 ){
+    //7日経ったら再起動する。最大は4294967295ミリ秒
+    ESP.restart();  
+  }
   
   if( M == 0 ){ //モード分岐
 
@@ -150,29 +184,6 @@ void loop() {
   
 } // loop終了
 
-void triggerAction(){ //トリガーモードでの動作
-
-  String sm = dataMap->get("sensorMode"); // 設定されたセンサーモードを取得
-
-  if( sm == "button" ){
-    buttonFunc();
-  }else{ //センサーモード分岐の末尾
-    Serial.println("センサーモード設定がおかしいようです。");
-  }
-  
-}
-
-void cycleAction(){ // サイクルモードでの動作
-  
-  ambient.set( 1, d1 );
-  ambient.set( 2, d2 );
-  ambient.set( 3, d3 );
-
-  bool r = ambient.send();
-
-  Serial.print("cycle送信しました。結果->");
-  Serial.println( r );
-}
 
 void buttonFunc(){
   if ( M5.Btn.wasReleased() ) {
@@ -386,10 +397,12 @@ void setDefaultdata(){
   dataMap->put("ambientChannelid", "57786");
   dataMap->put("iotMode", "cycle"); 
   // IoTモード null モードなし、cycle 周期実行モード、trigger トリガー実行モード
-  dataMap->put("sensorMode", "button"); 
-  // センサーモード SensorMode(iotModer)->button(trigger):ボタン、bps_unit(cycle)
+  dataMap->put("sensorMode", "none"); 
+  // センサーモード "button", "none"
+ 
   //ambientのデータ フィールド番号（１～８）, データ内容（int または double )
-  dataMap->put("cycleTime", "300000"); //サイクルモードのサイクル実行間隔を設定する。
+  dataMap->put("cycleTime", "300000"); //サイクルモードのサイクル実行間隔を設定する(ms)。ambientは短期間５秒、連続運転３０秒以上を推奨
+  
   dataMap->put("cmnt", ""); //コメント用データ
  
   //Serial.println( toJSON( dataMap ) );
