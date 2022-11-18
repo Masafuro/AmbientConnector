@@ -2,9 +2,9 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>Your page title here :)</title>
+  <title>Ambient Connector</title>
   <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="author" content="古川企画">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style type="text/css">
   html {
@@ -494,10 +494,52 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="one-half column" style="margin-top: 25%">
-        <h4>Basic Page</h4>
-        <p>This index.html page is a placeholder with the CSS, font and favicon. It's just waiting for you to add some content! If you need some help hit up the <a href="http://www.getskeleton.com">Skeleton documentation</a>.</p>
+      <div class="one-half column" style="margin-top: 5%">
+        <h1>Ambient_Connector</h1>
       </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <label for="exampleEmailInput">Wifi名</label>
+        <input class="u-full-width" type="email" placeholder="xxxxxxx" id="exampleEmailInput">
+      </div>
+      <div class="four columns">
+        <label for="exampleEmailInput">パスワード</label>
+        <input class="u-full-width" type="email" placeholder="xxxxxxxx" id="exampleEmailInput">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <label for="exampleEmailInput">チャネルID</label>
+        <input class="u-full-width" type="email" placeholder="xxxxxxx" id="exampleEmailInput">
+      </div>
+      <div class="four columns">
+        <label for="exampleEmailInput">リードキー</label>
+        <input class="u-full-width" type="email" placeholder="xxxxxxxx" id="exampleEmailInput">
+      </div>
+      <div class="four columns">
+        <label for="exampleEmailInput">ライトキー</label>
+        <input class="u-full-width" type="email" placeholder="xxxxxxxx" id="exampleEmailInput">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <label for="exampleRecipientInput">送信タイプ</label>
+        <select class="u-full-width" id="exampleRecipientInput">
+          <option value="Option 1">周期実行</option>
+          <option value="Option 2">トリガー実行</option>
+        </select>
+      </div>
+      <div class="four columns">
+        <label for="exampleEmailInput">実行周期(ms)</label>
+        <input class="u-full-width" type="email" placeholder="xxxxxxxx" id="exampleEmailInput">
+      </div>
+    </div>
+    <input class="button-primary" type="submit" value="送信！！">
+    <div class="row">
+        <div class="twelve column">
+          <p> developed by <a href="https://furukawakikaku.jp">古川企画</a>.</p>
+        </div>
     </div>
   </div>
 </body>
