@@ -16,24 +16,24 @@
           <div class="row">
               <div class="4 col">
                   Wifi名
-                  <input class="card w-100" type="text" placeholder="xxxxx">
+                  <input id="wifiSsid" class="card w-100" type="text" placeholder="xxxxx">
               </div>
               <div class="4 col">
                   パスワード
-                  <input class="card w-100" type="password" placeholder="xxxxx">
+                  <input id="wifiPass" class="card w-100" type="password" placeholder="xxxxx">
               </div>
           </div>
         <div class="row">
           <div class="4 col">
               IoT送信タイプ
-              <select class="card w-100">
+              <select class="card w-100" id="iotType">
                   <option value="cycle">定期送信</option>
                   <option value="trigger">トリガー送信</option>
               </select>
           </div>
           <div class="4 col">
               送信間隔(秒)
-              <input class="card w-100" type="number" placeholder="300">
+              <input id="cycleTime" class="card w-100" type="number" placeholder="300">
           </div>
         </div>
         <hr>
@@ -41,23 +41,39 @@
         <div class="row">
           <div class="4 col">
               チャネルID
-              <input class="card w-100" type="number" placeholder="300">
+              <input id="channelId" class="card w-100" type="number" placeholder="300">
           </div>
           <div class="4 col">
               ライトキー
-              <input class="card w-100" type="number" placeholder="300">
+              <input id="writeKey" class="card w-100" type="text" placeholder="300">
           </div>
           <div class="4 col">
               リードキー
-              <input class="card w-100" type="number" placeholder="300">
+              <input id="readKey" class="card w-100" type="text" placeholder="300">
           </div>
         </div>
         <div class="row">
             <hr>
-            <button class="btn primary" type="submit">送信！</button>
+            <button class="btn primary" type="button" onclick="send()">送信！</button>
         </div>
       </form>
       <div>
+      <script>
+        function send(){
+          var query = "./d/finish.html?";
+          var d01 = "wifiSsid=" + document.getElementById("wifiSsid").value;
+          var d02 = "wifiPass=" + document.getElementById("wifiPass").value;
+          var d03 = "iotType=" + document.getElementById("iotType").value;
+          var d04 = "cycleTime=" + document.getElementById("cycleTime").value;
+          var d05 = "channelId=" + document.getElementById("channelId").value;
+          var d06 = "writeKey=" + document.getElementById("writeKey").value;
+          var d07 = "readKey=" + document.getElementById("readKey").value;
+
+          query = query + d01 + "&" + d02 + "&" + d03 + "&" + d04 + "&" + d05 + "&" + d06 + "&" + d07;
+          window.alert(query);
+          window.location.href = query;
+        }
+      </script>
 
   </body>
 </html>
