@@ -36,7 +36,6 @@ void setup()
     request->send(SPIFFS, "/index.html");
   });
 
-
   // style.cssにアクセスされた時のレスポンス
   server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/style.css", "text/css");
@@ -58,7 +57,7 @@ void setup()
         Serial.println("------");
     }
 //    request->send(200, "text/plain", "message received");
-      request->send(SPIFFS, "/finish.html");
+      request->send(SPIFFS, "/d/finish.html");
 
   });
 
