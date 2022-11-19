@@ -137,6 +137,13 @@ void loop() {
   commandTrigger(); //コマンド入力時割り込み処理
   bool W = wifiCheck();
   
+  if (M5.Btn.pressedFor(2000)) {    //If the button is pressed for more than 2 seconds
+    M5.dis.drawpix(0, yellow );
+    Serial.println("Button A was pressed for more than 2 seconds.");
+    delay(10000);
+  }
+  
+  
   if( millis() > 604800000 ){
     //7日経ったら再起動する。最大は4294967295ミリ秒
     ESP.restart();  
