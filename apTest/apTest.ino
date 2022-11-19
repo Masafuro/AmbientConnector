@@ -1,10 +1,12 @@
 #include <M5Atom.h>
 #include <WiFi.h>       //WiFi接続用
 #include <WebServer.h>  //サーバー設定用
+#include "ESPAsyncWebServer.h"
+
 
 // サーバー設定ポート80で接続
-WebServer server(80);
-
+//WebServer server(80);
+AsyncWebServer server(80);
 
 // アクセスポイント設定
 const char ssid_AP[] = "ESP23-WiFi";  //SSID
@@ -83,6 +85,22 @@ void setup() {
   server.onNotFound(handleNotFound);  //Webページが見つからない時の応答関数を設定
   server.on("/get/btn_on", btnOn);    //ボタンオン受信処理 リンクで/get/btn_onに飛ぶとbtnON関数が実行される。
   server.on("/get/btn_off", btnOff);  //ボタンオフ受信処理
+  
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+ 
+    int paramsNr = request->params();
+    Serial.println(paramsNr);
+    for(int i=0;i<paramsNr;i++){
+        AsyncWebParameter* p = request->getParam(i);
+ 
+        Serial.print("Param name: ");
+        Serial.println(p->name());
+        Serial.print("Param value: ");
+        Serial.println(p->value());
+        Serial.println("------");
+    }
+    request->send(200, "text/plain", "message received");
+  });
   server.begin();                     //Webサーバー開始
 
   // シリアル出力
