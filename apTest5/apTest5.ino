@@ -45,7 +45,7 @@ void setup()
   });
 
   //URLクエリを処理
-  server.on("/d/", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/d/finish.html", HTTP_GET, [](AsyncWebServerRequest *request){
     int paramsNr = request->params();
     Serial.println(paramsNr);
     for(int i=0;i<paramsNr;i++){
