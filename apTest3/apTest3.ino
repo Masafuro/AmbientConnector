@@ -41,6 +41,10 @@ void setup()
   server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/style.css", "text/css");
   });
+  server.on("/lit.css", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/lit.css", "text/css");
+  });
+
   //URLクエリを処理
   server.on("/d/", HTTP_GET, [](AsyncWebServerRequest *request){
     int paramsNr = request->params();
@@ -53,7 +57,9 @@ void setup()
         Serial.println(p->value());
         Serial.println("------");
     }
-    request->send(200, "text/plain", "message received");
+//    request->send(200, "text/plain", "message received");
+      request->send(SPIFFS, "/finish.html");
+
   });
 
   // サーバースタート
