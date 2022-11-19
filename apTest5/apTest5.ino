@@ -37,11 +37,11 @@ void setup()
   });
 
   // style.cssにアクセスされた時のレスポンス
-  server.on("/normalize.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/normalize.css", "text/css");
+  server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/style.css", "text/css");
   });
-  server.on("/skeleton.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/skeleton.css", "text/css");
+  server.on("/lit.css", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/lit.css", "text/css");
   });
 
   //URLクエリを処理
