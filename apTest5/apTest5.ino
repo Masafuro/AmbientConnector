@@ -43,9 +43,13 @@ void setup()
   server.on("/lit.css", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/lit.css", "text/css");
   });
+  server.on("/chack.html", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/check.html");
+  });
+
 
   //URLクエリを処理
-  server.on("/d/finish.html", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("finish.html", HTTP_GET, [](AsyncWebServerRequest *request){
     int paramsNr = request->params();
     Serial.println(paramsNr);
     for(int i=0;i<paramsNr;i++){

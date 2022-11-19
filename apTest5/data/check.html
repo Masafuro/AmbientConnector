@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Ambient Connector</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="lit.css">
+  </head>
+  <body>
+    <div class="c">
+      <h1>Ambient Connector</h1>
+      <p>データをご確認の上、送信してください。</p>
+      <hr>
+      <table class="w-100">
+        <thead>
+            <tr>
+                <th>名前</th>
+                <th>データ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Wifi名</td>
+                <td id="wifiSsid">xxx</td>
+            </tr>
+            <tr>
+                <td>パスワード</td>
+                <td id="wifiPass">xxx</td>
+            </tr>
+            <tr>
+                <td>IoT送信タイプ</td>
+                <td id="iotType">xxx</td>
+            </tr>
+            <tr>
+                <td>送信間隔（秒）</td>
+                <td id="cycleTime">xxx</td>
+            </tr>
+            <tr>
+                <td>チャネルID</td>
+                <td id="channelId">xxx</td>
+            </tr>
+            <tr>
+                <td>リードキー</td>
+                <td id="readKey">xxx</td>
+            </tr>
+            <tr>
+                <td>ライトキー</td>
+                <td id="writeKey">xxx</td>
+            </tr>
+        </tbody>
+      </table>
+      <hr>
+      <button id="send" class="btn" onclick="send()">送信！</button>
+      <button id="cancel" class="btn primary" onclick="cancel()" >キャンセル</button>
+    </div>
+    <script>
+      function cancel(){
+        window.location.href = "./index.html";
+      }
+      function send(){
+        window.location.href = "./finish.html";
+      }
+
+      window.onload = function(){
+        document.getElementById("wifiSsid").innerHTML = getParam("wifiSsid");
+        document.getElementById("wifiPass").innerHTML = getParam("wifiPass");
+        document.getElementById("iotType").innerHTML = getParam("iotType");
+        document.getElementById("cycleTime").innerHTML = getParam("cycleTime");
+        document.getElementById("channelId").innerHTML = getParam("channelId");
+        document.getElementById("readKey").innerHTML = getParam("readKey");
+        document.getElementById("writeKey").innerHTML = getParam("writeKey");
+      }
+            //document.write("名前：" + getParam("name") + "　年齢：" + getParam("age") + "歳");
+            //クエリ文字列から値を取り出す関数
+      function getParam(name, url) {
+        url = window.location.href; //URLの取得
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+        var results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
+    </script>
+  </body>
+</html>
