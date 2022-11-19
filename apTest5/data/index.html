@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ambient Connector</title>
+    <title>IoT接続ツール</title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="lit.css">
   </head>
   <body>
-      <h1>Ambient Connector</h1>
+      <h1>IoT接続ツール</h1>
         <div class="c">
           <form>
           <div class="row">
@@ -45,11 +45,11 @@
           </div>
           <div class="4 col">
               ライトキー
-              <input id="writeKey" class="card w-100" type="text" placeholder="300">
+              <input id="writeKey" class="card w-100" type="text" placeholder="xxxx">
           </div>
           <div class="4 col">
               リードキー
-              <input id="readKey" class="card w-100" type="text" placeholder="300">
+              <input id="readKey" class="card w-100" type="text" placeholder="xxxx">
           </div>
         </div>
         <div class="row">
@@ -57,10 +57,14 @@
             <button class="btn primary" type="button" onclick="send()">送信！</button>
         </div>
       </form>
+        <div class="row w-100" >
+          <h6>developed by 古川企画 2022</h6>
+        </div>
       <div>
       <script>
+        var query = "";
         function send(){
-          var query = "./check.html?";
+          query = "./check.html?";
           var d01 = "wifiSsid=" + document.getElementById("wifiSsid").value;
           var d02 = "wifiPass=" + document.getElementById("wifiPass").value;
           var d03 = "iotType=" + document.getElementById("iotType").value;
@@ -72,6 +76,29 @@
           query = query + d01 + "&" + d02 + "&" + d03 + "&" + d04 + "&" + d05 + "&" + d06 + "&" + d07;
           //window.alert(query);
           window.location.href = query;
+        }
+
+        window.onload = function(){
+          query = window.location.search;
+          //window.alert(query);
+          document.getElementById("wifiSsid").value = getParam("wifiSsid");
+          document.getElementById("wifiPass").value = getParam("wifiPass");
+          document.getElementById("iotType").value = getParam("iotType");
+          document.getElementById("cycleTime").value = getParam("cycleTime");
+          document.getElementById("channelId").value = getParam("channelId");
+          document.getElementById("readKey").value = getParam("readKey");
+          document.getElementById("writeKey").value = getParam("writeKey");
+        }
+              //document.write("名前：" + getParam("name") + "　年齢：" + getParam("age") + "歳");
+              //クエリ文字列から値を取り出す関数
+        function getParam(name, url) {
+          url = window.location.href; //URLの取得
+          name = name.replace(/[\[\]]/g, "\\$&");
+          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+          var results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
       </script>
 

@@ -5,13 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Ambient Connector</title>
+    <title>IoT接続ツール</title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="lit.css">
   </head>
   <body>
-    <h1>Ambient Connector</h1>
-    <p>データを送信しました。</p>
+    <div class="c">
+      <h1>IoT接続ツール</h1>
+      <p>データを送信しました。</p>
+      <button id="send" class="btn" onclick="back()">戻る</button>
+    </div>
+    <div class="row w-100" >
+      <h6>developed by 古川企画 2022</h6>
+    </div>
+
+
+    <script>
+      var query = "";
+      window.onload = function(){
+        query = window.location.search;
+      }
+
+      function back(){
+        window.location.href = "./index.html" + query;
+      }
+
+    </script>
   </body>
 </html>

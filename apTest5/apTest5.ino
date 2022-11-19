@@ -2,7 +2,7 @@
 #include "ESPAsyncWebServer.h"
 #include "SPIFFS.h"
 
-const char ssid[] = "ESP32AP-TEST";
+const char ssid[] = "IoT-Connect-Tool";
 const char pass[] = "12345678";       // パスワードは8文字以上
 const IPAddress ip(192,168,123,45);
 const IPAddress subnet(255,255,255,0);
@@ -43,13 +43,16 @@ void setup()
   server.on("/lit.css", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/lit.css", "text/css");
   });
-  server.on("/chack.html", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/check.html", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/check.html");
+  });
+  server.on("/index.html", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/index.html");
   });
 
 
   //URLクエリを処理
-  server.on("finish.html", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/finish.html", HTTP_GET, [](AsyncWebServerRequest *request){
     int paramsNr = request->params();
     Serial.println(paramsNr);
     for(int i=0;i<paramsNr;i++){
@@ -61,7 +64,7 @@ void setup()
         Serial.println("------");
     }
 //    request->send(200, "text/plain", "message received");
-      request->send(SPIFFS, "/d/finish.html");
+      request->send(SPIFFS, "/finish.html");
 
   });
 
