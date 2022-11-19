@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ambient Connector</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="lit.css">
+  </head>
+  <body>
+      <h1>Ambient Connector</h1>
+        <div class="c">
+          <form>
+          <div class="row">
+              <div class="4 col">
+                  <label>Wifi名</label>
+                  <input class="card w-100" type="text" placeholder="xxxxx">
+              </div>
+              <div class="4 col">
+                  <label>パスワード</label>
+                  <input class="card w-100" type="password" placeholder="xxxxx">
+              </div>
+          </div>
+        <div class="row">
+          <div class="4 col">
+              IoT送信タイプ
+              <select class="card w-100">
+                  <option value="cycle">定期送信</option>
+                  <option value="trigger">トリガー送信</option>
+              </select>
+          </div>
+          <div class="4 col">
+              送信間隔(秒)
+              <input class="card w-100" type="number" placeholder="300">
+          </div>
+        </div>
+        <hr>
+        <h3>Ambient設定</h3>
+        <div class="row">
+          <div class="4 col">
+              チャネルID
+              <input class="card w-100" type="number" placeholder="300">
+          </div>
+          <div class="4 col">
+              ライトキー
+              <input class="card w-100" type="number" placeholder="300">
+          </div>
+          <div class="4 col">
+              リードキー
+              <input class="card w-100" type="number" placeholder="300">
+          </div>
+        </div>
+        <div class="row">
+            <hr>
+            <button class="btn primary" type="submit">送信！</button>
+        </div>
+      </form>
+      <div>
+
+  </body>
+</html>
