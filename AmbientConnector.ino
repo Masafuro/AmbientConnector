@@ -39,7 +39,7 @@ char ENDCODE  = '\n';
 const char s[2] = " "; // コマンドのパース文字
 char *miniData;
 
-//作業用
+//作業用 ?? これいる？
 long C = 6000 ; //作業サイクルを設定する(ms) millisは50日でオーバーフローする。
 unsigned long C0 = 0;
 
@@ -68,15 +68,17 @@ double d2=0.2;
 char d3='B';
 
 void cycleAction(){ // ----*サイクルモードでの動作-----
-  
-  ambient.set( 1, d1 );
-  ambient.set( 2, d2 );
-  ambient.set( 3, d3 );
+
+  int data1 = WiFi.RSSI();
+  ambient.set( 1, data1 );
+//  ambient.set( 2, d2 );
+//  ambient.set( 3, d3 );
 
   bool r = ambient.send();
 
-  Serial.print("cycle送信しました。結果->");
-  Serial.println( r );
+  Serial.print( r );
+  Serial.print(",");
+  Serial.println( data1 ); //rssiを表示
 }
 
 void triggerAction(){ //-----*トリガーモードでの動作-----
@@ -97,6 +99,12 @@ void triggerAction(){ //-----*トリガーモードでの動作-----
 
 
 void setup() {
+
+  //M5 ATOM 安定化用
+  pinMode(0, OUTPUT);
+  digitalWrite(0,LOW);
+
+  
   delay(1000);
   M5.begin( SerialEnable, I2CEnable, DisplayEnable);// ボーレートは115200のシリアル通信がセットされる。
   delay(1000);
@@ -408,8 +416,8 @@ void setDefaultdata(){
   // センサーモード "button", "none"
  
   //ambientのデータ フィールド番号（１～８）, データ内容（int または double )
-  dataMap->put("cycleTime", "300000"); //サイクルモードのサイクル実行間隔を設定する(ms)。ambientは短期間５秒、連続運転３０秒以上を推奨
-  
+  dataMap->put("cycleTime", "10000"); //サイクルモードのサイクル実行間隔を設定する(ms)。
+  //ambientは短期間５秒、連続運転３０秒以上を推奨
   dataMap->put("cmnt", ""); //コメント用データ
  
   //Serial.println( toJSON( dataMap ) );
