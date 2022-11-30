@@ -40,16 +40,7 @@ void setup() {
     delay(1000);
     ESP.restart();
   }
-
-/*  
-  if (!EEPROM.begin(1000)) {  //②
-    Serial.println("Failed to initialise EEPROM");
-    Serial.println("Restarting...");
-    delay(1000);
-    ESP.restart();
-  }
-*/
-
+  
 }
  
 
@@ -63,6 +54,7 @@ void loop() {
       NAMES.commit();
       HEIGHT.commit();
       AGE.commit();
+      // eeprom.end(); もあるよ。
       Serial.print("PUT: ");
       Serial.print("name: ");   Serial.println(name);
       Serial.print("height: "); Serial.println(height);
