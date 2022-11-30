@@ -58,6 +58,7 @@ void loop() {
       NAMES.writeString(0, name);
       HEIGHT.writeDouble(0, height);
       AGE.writeInt(0, age);
+      NAMES.commit();
       Serial.print("PUT: ");
       Serial.print("name: ");   Serial.println(name);
       Serial.print("height: "); Serial.println(height);
