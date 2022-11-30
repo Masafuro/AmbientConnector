@@ -56,8 +56,8 @@ void loop() {
   
   if(M5.Btn.wasPressed()){
       NAMES.writeString(0, name);
-      HEIGHT.writeDouble(0, height);
-      AGE.writeInt(0, age);
+      HEIGHT.writeDouble(10, height);
+      AGE.writeUInt(20, age);
       NAMES.commit();
       Serial.print("PUT: ");
       Serial.print("name: ");   Serial.println(name);
@@ -67,9 +67,9 @@ void loop() {
     delay(1000);
   }
 
-  NAMES.get(0, rname);
-  HEIGHT.get(0, height);
-  AGE.get(0, age);
+  NAMES.readString(0, rname);
+  HEIGHT.readDouble(10, height);
+  AGE.readUInt(20, age);
   Serial.print("GET:");
   Serial.print("name: ");   Serial.println(rname);
   Serial.print("height: "); Serial.println(height);
