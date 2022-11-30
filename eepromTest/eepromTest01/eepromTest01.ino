@@ -5,49 +5,75 @@ const bool SerialEnable = true;
 const bool I2CEnable = false; //falseにしとかないとハングする
 const bool DisplayEnable = true;
 
+EEPROMClass  NAMES("eeprom0");
+EEPROMClass  HEIGHT("eeprom1");
+EEPROMClass  AGE("eeprom2");
 
-int address=0;  
-int count=0;
-
+const char* name = "Teo Swee Ann";
+char rname[32];
+double height = 5.8;
+uint32_t age = 47;
 
 void setup() {
   M5.begin();
   M5.update();
   Serial.begin(115200);
   Serial.println("\nTesting EEPROM Library\n");
+
+  if (!NAMES.begin(0x500)) {
+    Serial.println("Failed to initialise NAMES");
+    Serial.println("Restarting...");
+    delay(1000);
+    ESP.restart();
+  }
+  if (!HEIGHT.begin(0x200)) {
+    Serial.println("Failed to initialise HEIGHT");
+    Serial.println("Restarting...");
+    delay(1000);
+    ESP.restart();
+  }
+  if (!AGE.begin(0x100)) {
+    Serial.println("Failed to initialise AGE");
+    Serial.println("Restarting...");
+    delay(1000);
+    ESP.restart();
+  }
+
+/*  
   if (!EEPROM.begin(1000)) {  //②
     Serial.println("Failed to initialise EEPROM");
     Serial.println("Restarting...");
     delay(1000);
     ESP.restart();
   }
+*/
 
-  count=EEPROM.readInt(address);  //③
-  Serial.print("SETUP:");
-  Serial.println(count);
-   
 }
  
 
 void loop() {
   M5.update();
-  Serial.println(count);
   
   if(M5.Btn.wasPressed()){
-    count=count+1;
-    EEPROM.writeInt(address,count);//③
-    EEPROM.commit();    
-    Serial.println(count);
-    delay(100);
+      NAMES.writeString(0, name);
+      HEIGHT.writeDouble(0, height);
+      AGE.writeInt(0, age);
+      Serial.print("PUT: ");
+      Serial.print("name: ");   Serial.println(name);
+      Serial.print("height: "); Serial.println(height);
+      Serial.print("age: ");    Serial.println(age);
+      Serial.println("------------------------------------\n");    
+    delay(1000);
   }
 
-  if(M5.Btn.wasPressed()){
-    if(count>0){
-      count=count-1;
-      EEPROM.writeInt(address,count);
-      EEPROM.commit();          
-      Serial.println(count);
-      delay(100);
-    }
-  }
+  NAMES.get(0, rname);
+  HEIGHT.get(0, height);
+  AGE.get(0, age);
+  Serial.print("GET:");
+  Serial.print("name: ");   Serial.println(rname);
+  Serial.print("height: "); Serial.println(height);
+  Serial.print("age: ");    Serial.println(age);
+  Serial.println("Done!");
+  delay(1000);
+
 }
