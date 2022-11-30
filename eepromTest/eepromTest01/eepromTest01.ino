@@ -5,10 +5,10 @@ const bool SerialEnable = true;
 const bool I2CEnable = false; //falseにしとかないとハングする
 const bool DisplayEnable = true;
 
+//eeprom 初期設定
 EEPROMClass  NAMES("eeprom0");
 EEPROMClass  HEIGHT("eeprom1");
 EEPROMClass  AGE("eeprom2");
-
 const char* name = "Teo Swee Ann";
 char rname[32];
 const char* age = "46";

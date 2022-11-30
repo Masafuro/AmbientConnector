@@ -400,26 +400,27 @@ bool connectWifi(){
 
 
 void setDefaultdata(){
+// 1データあたり64バイト用意しておけば大丈夫？？
   
-  dataMap->put("wifi" , "Yokote_wifi" );
+  dataMap->put("wifi" , "Yokote_wifi" ); //wifi ssid は最大３２文字 32バイト
   dataMap->put("pass", "yokoteyokote");
 //  dataMap->put("wifi" , "12345678" );
 //  dataMap->put("pass", "abcdefg");
-  dataMap->put("deviceName", "ChocoSensor_v1");
-  dataMap->put("devicePassword", "0000");
-  dataMap->put("ambientReadkey", "34270954ea493bb5");
+//  dataMap->put("deviceName", "ChocoSensor_v1");
+//  dataMap->put("devicePassword", "0000");
+  dataMap->put("ambientReadkey", "34270954ea493bb5"); //16文字 16バイト
   dataMap->put("ambientWritekey", "d75e7c19cb3aa8cc");
   dataMap->put("ambientChannelid", "57786");
-  dataMap->put("iotMode", "cycle"); 
+  dataMap->put("iotMode", "cycle");
+  dataMap->put("systemVersion", "v0.01");
   // IoTモード null モードなし、cycle 周期実行モード、trigger トリガー実行モード
-  dataMap->put("sensorMode", "none"); 
+//  dataMap->put("sensorMode", "none"); 
   // センサーモード "button", "none"
  
   //ambientのデータ フィールド番号（１～８）, データ内容（int または double )
   dataMap->put("cycleTime", "10000"); //サイクルモードのサイクル実行間隔を設定する(ms)。
   //ambientは短期間５秒、連続運転３０秒以上を推奨
   dataMap->put("cmnt", ""); //コメント用データ
- 
   //Serial.println( toJSON( dataMap ) );
   
 }
