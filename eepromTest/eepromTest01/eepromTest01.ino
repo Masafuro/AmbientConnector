@@ -23,7 +23,7 @@ void setup() {
   }
 
   count=EEPROM.readInt(address);  //③
-  Serial.print(SETUP:);
+  Serial.print("SETUP:");
   Serial.println(count);
    
 }
@@ -32,7 +32,6 @@ void setup() {
 void loop() {
   M5.update();
   Serial.println(count);
-  M5.Lcd.setCursor(0, 0);
   
   if(M5.Btn.wasPressed()){
     count=count+1;
@@ -42,7 +41,7 @@ void loop() {
     delay(100);
   }
 
-  if(M5.BtnB.wasPressed()){
+  if(M5.Btn.wasPressed()){
     if(count>0){
       count=count-1;
       EEPROM.writeInt(address,count);
