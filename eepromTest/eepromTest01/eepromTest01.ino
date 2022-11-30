@@ -11,8 +11,10 @@ EEPROMClass  AGE("eeprom2");
 
 const char* name = "Teo Swee Ann";
 char rname[32];
-double height = 5.8;
-uint32_t age = 47;
+const char* age = "46";
+char rage[32];
+const char* height = "175.2";
+char rheight[32];
 
 void setup() {
   M5.begin();
@@ -56,9 +58,11 @@ void loop() {
   
   if(M5.Btn.wasPressed()){
       NAMES.writeString(0, name);
-      HEIGHT.writeDouble(10, height);
-      AGE.writeUInt(20, age);
+      HEIGHT.writeString(0, height );
+      AGE.writeString(0, age);
       NAMES.commit();
+      HEIGHT.commit();
+      AGE.commit();
       Serial.print("PUT: ");
       Serial.print("name: ");   Serial.println(name);
       Serial.print("height: "); Serial.println(height);
@@ -67,13 +71,13 @@ void loop() {
     delay(1000);
   }
 
-  NAMES.readString(0, rname);
-  HEIGHT.readDouble(10, height);
-  AGE.readUInt(20, age);
+  NAMES.get(0, rname);
+  HEIGHT.get(0, rheight);
+  AGE.get(0, rage);
   Serial.print("GET:");
   Serial.print("name: ");   Serial.println(rname);
-  Serial.print("height: "); Serial.println(height);
-  Serial.print("age: ");    Serial.println(age);
+  Serial.print("height: "); Serial.println(rheight);
+  Serial.print("age: ");    Serial.println(rage);
   Serial.println("Done!");
   delay(1000);
 
